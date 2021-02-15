@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Datenbank</title>
+     <meta charset="UTF-8"> 
+    <link rel="stylesheet" type="text/css" href="css/style.css"> 
+</head>
+<body>
+<div id="wrapper">
+ 
+  
+  <div id="nav">
+    <ul>
+       <li><a href=index.html>  Home </a></li> 
+      <li><a href= motor.html>  Motorhaube</a> </li>
+      <li><a href= reifen.html> Reifen</a> </li>
+      <li><a href=sitz.html> Sitz</a></li>
+      <li><a href=haltegriff.html>Haltegriff</a></li>
+      <li><a href=galerie.html>Galerie</a></li>
+      <li><a href= datenbank.html>Datenbank</a></li>
+      <li><a href=impressum.html>Impressum</a></li>
+    </ul>
+  </div>
+  <div id="section" onclick="location.href='index.html'"> <img id="symbol" src="img/symbol.jpg"></div>
+  
+  <div id="content">
+    <p class="pageHeader">Datenbank</p>
+  
+    <div id="contentLeft" class="fließtext">
+          <div id="create" style="display: inline">
+            Rennwagen anlegen: <br>
+             <input type="hidden" id="rennwagenId">
+            Modell:
+            <select name="Modell" id="modell" >
+              <option> Laufrad</option>
+              <option>Dreirad</option>
+              <option>Bobbycar</option>
+            </select> <br>
+          
+            persönlicher Name: <input id="name" type="text"> <br>
+            Farbe wählen: <input type="color" id="farbe"> <br>
+            Zusatzfeatures:<select id="zusatzfeatures" name="zusatzfeatures">
+            <option>Kofferraum</option>
+            <option> Heckspoiler</option>
+            <option> Alufelgen</option><br>
+            </select>
+            Sticker: <select name="sticker" id="sticker">
+              <option>Katzensticker</option>
+              <option>Hundesticker</option>
+              <option>Eulensticker</option>
+            </select> 
+            <br>
+            <input type="button" value="Speichern" onclick="db.transaction(addRennwagen);">
+          </div>
+          
+       
+        <div id="update" style="display: none">
+          Rennwagen anpassen: <br>
+            <input type="hidden" id="rennwagenId">
+           Modell:
+           <select name="Modell" id="updateModell" >
+             <option> Laufrad</option>
+             <option>Dreirad</option>
+             <option>Bobbycar</option>
+           </select> <br>
+         
+           persönlicher Name: <input id="updateName" type="text"> <br>
+           Farbe wählen: <input type="color" id="updateFarbe"> <br>
+           Zusatzfeatures:<select id="updateZusatzfeatures" name="updateZusatzfeatures">
+            <option>Kofferraum</option>
+            <option> Heckspoiler</option>
+            <option> Alufelgen</option><br>
+            </select>
+          <br>
+           Sticker: <select name="updateSticker" id="sticker">
+             <option>Katzensticker</option>
+             <option>Hundesticker</option>
+             <option>Eulensticker</option>
+           </select> 
+           <br>
+           <input type="button" value="Änderungen speichern" onclick="db.transaction(updateRennwagen);">
+        </div>
+        
+      </div>         
+          
+    <div id="contentRight">
+        <div id="liste">
+          
+        </div>
+    </div>
+ 
+  </div>
+
+
+  
+<script type="text/javascript"> 
+
+    var db; //immer nur ein Objekt dieser Klasse OpenDB geöffnet 
+    
+    function openDb() { 
+      db=openDatabase("Sally", "1.0", "DBOSE", 1*1024*1024); 
+      console.log(db); 
+    } 
+    
+    
+    
+    function tabelleErzeugen(tx){ 
+      console.log(tx); 
+      
+      tx.executeSql("CREATE TABLE IF NOT EXISTS rennwagen (id INTEGER NOT NULL PRIMARY KEY autoincrement, name varchar (255) NOT NULL)", [], sqlSuccess, sqlFail); 
+    } 
+    
+    
+    function sqlSuccess(){ 
+      console.log("Erfolgreich"); 
+    } 
+    
+    
+    function sqlFail(e){ 
+      console.log("Fehlgeschlagen: " + e); 
+    } 
+    
+    //Tabelle erzeugen 
+    function addRennwagen(tx){
+      let modell=document.getElementById("modell").value;
+      let name=document.getElementById("name").value; 
+      let sticker=document.getElementById("sticker").value;
+      let farbe=document.getElementById("farbe").value;
+      let zusatzfeatures=document.getElementById("zusatzfeatures").value;
+      
+      
+      let string="INSERT INTO rennwagen (modell, name, farbe, zusatzfeatures, sticker) values (?,?,?,?,?)"; 
+      
+      tx.executeSql(string, [modell, name, farbe, zusatzfeatures, sticker], getAllRennwagen, sqlFail); 
+    
+    } 
+    
+    //Tabelle löschen 
+    function cancelTable(tx){ 
+    
+      tx.executeSql("DROP TABLE rennwagen", [], sqlSuccess, sqlFail); 
+    } 
+    
+    openDb(); 
+    db.transaction(tabelleErzeugen); 
+    
+    
+    //db.transaction(cancelTable); 
+    function hideOthers(obj){ 
+      var navigationsleiste = new Array("create","update"); 
+      var temp = null;
+      
+      for(var i = 0; i < navigationsleiste.length; i++){ 
+        temp = navigationsleiste[i]; 
+        var element = document.getElementById(temp); 
+        if(element != null){ 
+          if(obj != temp){ 
+          element.style.display = 'none'; 
+          } 
+        else{ 
+        element.style.display = 'block'; 
+          } 
+        } 
+      } 
+      return true; 
+      } 
+    
+    
+    
+    //Retrieve - Listenansicht 
+    function getAllRennwagen(tx){ 
+      tx.executeSql("Select * from Rennwagen;", [], displayResults, sqlFail); 
+    } 
+    
+    db.transaction(getAllRennwagen); 
+    
+    
+    function deleteRennwagen(id){ 
+      db.transaction(function(tx) { 
+      
+      tx.executeSql("DELETE FROM rennwagen WHERE rennwagenId=?", [id], getAllRennwagen,
+      sqlFail); 
+    } 
+    ); 
+    } 
+    
+    
+    
+    function updateRennwagen(tx){
+      document.getElementById("update").style.display="none"; 
+       let modell=document.getElementById("updateModell").value;
+      let name=document.getElementById("updateName").value; 
+      let sticker=document.getElementById("updateSticker").value;
+      let farbe=document.getElementById("updateFarbe").value;
+      let zusatzfeatures=document.getElementById("updateZusatzfeatures").value;
+      
+      tx.executeSql("update Rennwagen set modell=?, name=?, farbe=?, zusatzfeatures=?, sticker=? where rennwagenId=?",
+      [modell, name, farbe, zusatzfeatures, sticker, rennwagenId], getAllRennwagen, sqlFail); 
+    
+    } 
+    
+    
+    
+    //Daten in DB speichern 
+    function bearbeiteRennwagen(id){ 
+      document.getElementById("rennwagenId").style.display="inline"; 
+      db.transaction(function(tx) { 
+      
+      tx.executeSql("select * from Rennwagen where rennwagenId=?", [id], setValues,
+      sqlFail); 
+      }  
+      ); 
+    } 
+    
+    
+    
+    function setValues(tx, results){ 
+      document.getElementById("updateName").value=results.rows[0].name;
+      document.getElementById("updateModell").value=results.rows[0].modell;
+      document.getElementById("updateSticker").value=results.rows[0].sticker;
+      document.getElementById("updateFarbe").value=results.rows[0].farbe;
+      document.getElementById("updateKofferraum").value=results.rows[0].zusatzfeatures;
+      document.getElementById("updateId").value=results.rows[0].id; 
+    
+    } 
+    
+    function displayResults(tx, results){ 
+    //console.log(results); 
+    
+    let _table="<table>"; 
+    
+    for (let i=0; i<results.rows.length; i++){ 
+      _table+="<tr>"; 
+      let zeile=results.rows.item(i); 
+      _table+="<td>"+zeile.id+"</td>"; 
+      _table+="<td>"+zeile.modell+"</td>"; 
+      _table+="<td>"+zeile.name+"</td>";
+      _table+="<td>"+zeile.farbe+"</td>";
+      _table+="<td>"+zeile.kofferraumJa+"</td>";
+      _table+="<td>"+zeile.sticker+"</td>";
+      _table+="<td><a href='#' onclick='deleteRennwagen("+zeile.id+")'>Löschen</a></td>"; 
+      _table+='<td><a href="#" onclick="bearbeiteRennwagen('+zeile.id+');">Bearbeiten</a></td>'; 
+      _table+="</tr>"; 
+    
+    } 
+    
+      _table+="</table>"; 
+      document.getElementById("liste").innerHTML=_table; 
+     // hideOthers("update"); 
+    } 
+
+
+</script> 
+    
+
+
+
+
+
+
+
+
+  <div id="footer"> (c) Beate & Marie 2018
+  </div>
+  
+</div>
+</body>
+</html>

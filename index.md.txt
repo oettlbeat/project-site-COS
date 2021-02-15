@@ -1,2 +1,4 @@
 ** This is a fancy headline  
 some text
+
+This are the changes that Beate made.

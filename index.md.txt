@@ -1,2 +1,6 @@
 ** This is a fancy headline  
 some text
+
+**Another headline in this file.
+
+This is another change. More text

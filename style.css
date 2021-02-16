@@ -3,153 +3,73 @@ body {
   text-align:center;
   margin:0 auto;
   width:100%;
-  background:#90A4C5;
+  background:#444;
   font-family: tahoma;
-  
-  
 }
 
-#wrapper{
+#content{
+	font-family: sans-serif;
 	margin:auto;
-	text-align:left;
+	text-align:center;
 	width:80%;
 	background:#FFF;
-	
+	padding: 20px 40px 20px 40px;
 	}
 	
-
-#ueberschrift{
-  margin-left:48px;
-
-  
-}
-
-div {
-  border: 0px dotted green; 
-  padding:0px;
-}
+#nav {
+     font-family: sans-serif;
+	 width: 100%;
+     background: #333;
+	 font-size:11pt;
+	 display:inline-block;
+	 letter-spacing:1px;
+	 text-transform: uppercase;
+	 
+}	
 
 h1 {
-  font-size: 45pt;
-  font-family: tahoma;
+  font-size: 10pt;
+  font-family: sans-serif;
   line-height:0.5;
   padding-bottom:30px;
-  text-align: left;
   letter-spacing: 7px;
   text-transform: uppercase;
-  color:#90A4C5;
-  
-  }
-  
-  .pageHeader {
-  font-size: 45pt;
-  font-family: tahoma;
-  line-height:0.5;
-  padding-bottom:30px;
-  text-align: center;
-  letter-spacing: 7px;
-  text-transform: uppercase;
-  color:#90A4C5;
-  font-weight: bold;
- 
-  
+  color:#000;
   }
   
 h2 {
   font-size:14pt;
-  
+  font-family: sans-serif;
+  padding-top:10px;
+  padding-bottom:0px;
+  color:#90A4C5;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size:12pt;
+  font-family: sans-serif;
+  padding-top:10px;
+  padding-bottom:0px;
+  color:#90A4C5;
+  text-transform: uppercase;
 }
   
-.fließtext {
+p {
   line-height: 25px;
   font-size:11pt;
   margin-left: 48px;
   padding-right:30px;
-}
-.unterüberschrift {
-  padding-left: 80px;
+  font-family: sans-serif;
 }
 
-#section{
-	text-align:center;
-	padding-top:45px;
-	clear:left;
-  margin-bottom:-30px;
-	}
-#homeText {
-  float: right;
-  width: 50%;
-  margin-top: 300px;
+ul {
   line-height: 25px;
   font-size:11pt;
-  
-}
-#homeBild {
-  
-  float: left;
-  margin-left:48px;
-  margin-bottom: 60px;
-  
- 
-  
+  padding-right:30px;
+  font-family: sans-serif;
 }
 
-#contentLeft{
-  width:48%;
-  float:left;
-  border: 0px solid blue;
-  padding-bottom:30px;
-  margin-right: 50px;
-}
-#textLeft{
-   float:left;
-   margin-left: 48px;
-}
-#contentRight{
-  width:45%;
-  float:left;
-  margin-top:100px;
-  border: 0px solid;
-}
-
-#bildRight{
-  float:left;
-  padding-top: 210px;
-  padding-bottom: 30px;
-
-  
-  
-}
-
-#impressum1 {
- 
-  
-  float: left;
-}
-#impressum2 {
-  float: left;
-  padding-left: 30px;
-  
-}
-#impressum3{
-  clear:left;
-}
-
-
-  
-
-#header {
-  
-
-}
-#nav {
-     width: 100%;
-     background: #D984B4;
-	 font-size:11pt;
-	 display:inline-block;
-	 letter-spacing:1px;
-	 
-}
  
 #nav ul {
      margin: auto 0;
@@ -174,20 +94,17 @@ h2 {
 #nav ul li a:hover {
      background: #A16489;
      color:#FFF;
-
-
-
 }
+
 #footer {
-  
-  background-color: #D984B4;
+  padding: 10px 40px 10px 40px;
+  background-color: #555;
+  font-family: sans-serif;
   color:white;
   font-size:small;
-  line-height:40px;
+  line-height:16px;
   clear: left;
 }
-
-
 
 
 #bilder{

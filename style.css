@@ -70,6 +70,13 @@ ul {
   font-family: sans-serif;
 }
 
+ol {
+  line-height: 25px;
+  font-size:11pt;
+  padding-right:30px;
+  font-family: sans-serif;
+}
+
  
 #nav ul {
      margin: auto 0;
